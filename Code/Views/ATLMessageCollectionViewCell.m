@@ -457,8 +457,14 @@ NSInteger const kATLSharedCellTag = 1000;
     if (CGSizeEqualToSize(size, CGSizeZero)) {
         LYRMessagePart *imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEGPreview);
         if (!imagePart) {
-            // If no preview image part found, resort to the full-resolution image.
+            imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageGIFPreview);
+        }
+        // If no preview image part found, resort to the full-resolution image.
+        if (!imagePart) {
             imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEG);
+        }
+        if (!imagePart) {
+            imagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageGIF);
         }
         // Resort to image's size, if no dimensions metadata message parts found.
         if ((imagePart.transferStatus == LYRContentTransferComplete) ||

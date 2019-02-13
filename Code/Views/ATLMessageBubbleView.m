@@ -129,10 +129,10 @@ typedef NS_ENUM(NSInteger, ATLBubbleViewContentType) {
 
 - (void)updateProgressIndicatorWithProgress:(float)progress visible:(BOOL)visible animated:(BOOL)animated
 {
-    [self.progressView setProgress:progress animated:animated];
-    [UIView animateWithDuration:animated ? 0.25f : 0.0f animations:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.progressView setProgress:progress animated:NO];
         self.progressView.alpha = visible ? 1.0f : 0.0f;
-    }];
+    });
 }
 
 - (void)prepareForReuse
