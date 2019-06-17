@@ -468,6 +468,10 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if (message.isUnread && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive && self.marksMessagesAsRead) {
         [message markAsRead:nil];
     }
+    
+    if ([self.delegate respondsToSelector:@selector(conversationViewController:configureCell:forMessage:)]) {
+        [self.delegate conversationViewController:self configureCell:cell forMessage:message];
+    }
 }
 
 - (void)configureFooter:(ATLConversationCollectionViewFooter *)footer atIndexPath:(NSIndexPath *)indexPath
